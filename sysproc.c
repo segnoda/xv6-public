@@ -128,3 +128,23 @@ sys_sem_signal(void)
 
   return sem_signal(num, count);
 }
+
+int
+sys_clone(void)
+{
+  int function, arg, stack;
+  if(argint(0, &function) < 0) return -1;
+  if(argint(1, &arg) < 0) return -1;
+  if(argint(2, &stack) < 0) return -1;
+
+  return clone((void*)function, (void*)arg, (void*)stack);
+}
+
+int
+sys_join(void)
+{
+  int stack;
+  if(argint(0, &stack) < 0) return -1;
+
+  return join((void**)stack);
+}
